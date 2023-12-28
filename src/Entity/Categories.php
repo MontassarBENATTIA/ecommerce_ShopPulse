@@ -7,6 +7,9 @@ use App\Repository\CategoriesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Type;
+use phpDocumentor\Reflection\Types\Integer;
+use phpDocumentor\Reflection\Types\Nullable;
 
 #[ORM\Entity(repositoryClass: CategoriesRepository::class)]
 class Categories
@@ -19,6 +22,8 @@ class Categories
 
     #[ORM\Column(length: 150)]
     private ?string $name = null;
+    #[ORM\Column()]
+    private ?int $categoryOrder = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'categories')]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
@@ -44,6 +49,16 @@ class Categories
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    public function getCategoryOrder(): ?int
+    {
+        return $this->categoryOrder;
+    }
+
+    public function setCategoryOrder(?int $categoryOrder): void
+    {
+        $this->categoryOrder = $categoryOrder;
     }
 
     public function setName(string $name): static
